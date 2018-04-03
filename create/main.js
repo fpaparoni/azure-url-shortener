@@ -1,14 +1,30 @@
 
 var DocumentClient = require('documentdb').DocumentClient;
-var DocumentDbDAO = require('documentdb-dao');
 var shortid = require('shortid');
-var database;
-var collection;
 
-var host = "";                     // Add your endpoint
-var masterKey = "";  // Add the masterkey of the endpoint
+// Add your endpoint
+var host = "https://hellocloud.documents.azure.com:443/";      
+// Add the masterkey of the endpoint
+var masterKey = "";  
 var client = new DocumentClient(host, {masterKey: masterKey});
 
-var documentDbDAO = new DocumentDbDAO(client, 'shortener', 'url');
 var generated = shortid.generate();
-documentDbDAO.insert("cskcsk",generated);
+var documentDefinition = { id: generated, url: "gege" };
+var collectionUrl = ('dbs/shortener/colls/url');	
+client.createDocument(collectionUrl, documentDefinition, processResponse);
+
+function processResponse(err,createdDocument) {
+    if (err) {
+        if (err.code==409) {
+            console.log("Conflict with insert");
+            var generated = shortid.generate();
+            var documentDefinition = { id: generated, url: "gege5" };
+            client.createDocument(collectionUrl, documentDefinition, processResponse);
+        } else {
+            console.log(err);
+            throw err;
+        }
+    } else {
+        console.log('result', createdDocument);
+    }
+}
