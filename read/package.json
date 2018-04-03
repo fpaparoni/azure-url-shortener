@@ -1,15 +1,14 @@
 {
-  "name": "documentdb-dao",
+  "name": "read",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
-  "dependencies": {
-    "documentdb": "^1.14.2"
-  },
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "documentdb": "^1.14.2"
+  }
 }
